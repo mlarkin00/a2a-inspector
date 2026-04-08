@@ -22,3 +22,6 @@ steps:
 
 images:
   - 'us-west1-docker.pkg.dev/mslarkin-agents/a2a-inspector/a2a-inspector'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

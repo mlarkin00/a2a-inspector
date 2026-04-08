@@ -1,0 +1,24 @@
+steps:
+  # Build the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-west1-docker.pkg.dev/mslarkin-agents/a2a-inspector/a2a-inspector', '.']
+
+  # Push to Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-west1-docker.pkg.dev/mslarkin-agents/a2a-inspector/a2a-inspector']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'a2a-inspector'
+      - '--image'
+      - 'us-west1-docker.pkg.dev/mslarkin-agents/a2a-inspector/a2a-inspector'
+      - '--region'
+      - 'us-west1'
+      - '--allow-unauthenticated'
+
+images:
+  - 'us-west1-docker.pkg.dev/mslarkin-agents/a2a-inspector/a2a-inspector'
